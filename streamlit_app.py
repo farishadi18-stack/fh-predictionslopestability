@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('🎈 App Name')
+st.title(' Prediction Factor of Safety')
 
-st.write('Hello world!')
+st.info('This is a preliminary framework for the early-stage prediction ')
