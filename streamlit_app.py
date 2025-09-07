@@ -33,7 +33,7 @@ slope_angle = st.number_input("Slope Angle (°)", min_value=15.0, max_value=90.0
 try:
     df = pd.read_csv("new treated slope.xlsx")
 except:
-    st.warning("No dataset found. Please upload soil_nail_data.csv to GitHub repo.")
+    st.warning("No dataset found. Please upload new treated slope.xlsx to GitHub repo.")
     df = pd.DataFrame(columns=[
         "c","phi","gamma","nail_length","nail_diameter","nail_inclination","slope_angle","FoS"
     ])
