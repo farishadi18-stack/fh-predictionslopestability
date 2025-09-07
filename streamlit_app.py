@@ -27,17 +27,16 @@ slope_angle = st.number_input("Slope Angle (°)", min_value=15.0, max_value=90.0
 # ----------------------------
 try:
     df = pd.read_csv("new treated slope.csv")
+    st.success("✅ Dataset loaded successfully")
 except:
-    st.error("Dataset not found. Please upload 'new treated slope.csv'.")
+    st.error("❌ Dataset not found. Please upload 'new treated slope.csv' to your repo.")
     st.stop()
 
 # ----------------------------
 # Balance with SMOGN
 # ----------------------------
-df_balanced = smogn.smoter(
-    data=df,
-    y="Factor_of_Safety"
-)
+with st.spinner("Balancing dataset with SMOGN..."):
+    df_balanced = smogn.smoter(data=df, y="Factor_of_Safety")
 
 X = df_balanced[["Cohesion", "Friction_Angle", "Nail_Length", 
                  "Drillhole_Diameter", "Nail_Inclination", "Slope_Angle"]]
@@ -46,17 +45,19 @@ y = df_balanced["Factor_of_Safety"]
 # ----------------------------
 # Train Model with K-Fold CV
 # ----------------------------
-model = RandomForestRegressor(n_estimators=200, random_state=42)
-kf = KFold(n_splits=10, shuffle=True, random_state=42)
-scores = cross_val_score(model, X, y, cv=kf, scoring="r2")
-st.write(f"Model 10-Fold CV R² Score: {scores.mean():.3f}")
+with st.spinner("Training Random Forest model..."):
+    model = RandomForestRegressor(n_estimators=200, random_state=42)
+    kf = KFold(n_splits=10, shuffle=True, random_state=42)
+    scores = cross_val_score(model, X, y, cv=kf, scoring="r2")
+    model.fit(X, y)
 
-# Fit final model
-model.fit(X, y)
+st.info(f"Model 10-Fold CV R² Score: {scores.mean():.3f}")
 
 # ----------------------------
 # Prediction
 # ----------------------------
-input_data = np.array([[c, phi, nail_length, nail_diameter, nail_inclination, slope_angle]])
-fos_pred = model.predict(input_data)[0]
-st.success(f"Predicted Factor of Safety (FoS): {fos_pred:.3f}")
+if st.button("🔮 Predict FoS"):
+    input_data = np.array([[c, phi, nail_length, nail_diameter, nail_inclination, slope_angle]])
+    fos_pred = model.predict(input_data)[0]
+    st.success(f"Predicted Factor of Safety (FoS): {fos_pred:.3f}")
+
