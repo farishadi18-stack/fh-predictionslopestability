@@ -13,10 +13,10 @@ st.write("Estimate Factor of Safety (FoS) using soil shear strength and nail par
 # ----------------------------
 # User Input
 # ----------------------------
-c = st.number_input("Cohesion (kPa)", min_value=0.0, step=0.5)
+c = st.number_input("Cohesion (kPa)", min_value=0.0, max_value=60.0, step=0.5)
 phi = st.number_input("Friction Angle (°)", min_value=0.0, max_value=60.0, step=0.5)
-nail_length = st.number_input("Nail Length (m)", min_value=3.0, step=1.0)
-nail_diameter = st.number_input("Drillhole Diameter (mm)", min_value=50.0, step=5.0)
+nail_length = st.number_input("Nail Length (m)", min_value=3.0, max_value=30.0, step=1.0)
+nail_diameter = st.number_input("Drillhole Diameter (mm)", min_value=50.0, max_value=200.0, step=5.0)
 nail_inclination = st.number_input("Inclination (°)", min_value=0.0, max_value=30.0, step=1.0)
 slope_angle = st.number_input("Slope Angle (°)", min_value=15.0, max_value=90.0, step=1.0)
 
