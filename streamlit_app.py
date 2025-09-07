@@ -24,9 +24,9 @@ slope_angle = st.number_input("Slope Angle (°)", min_value=15.0, max_value=90.0
 # Load Dataset
 # ----------------------------
 try:
-    df = pd.read_csv("new treated slope.csv")
+    df = pd.read_csv("new treated slope.xlsx")
 except:
-    st.error("❌ Dataset not found. Please upload 'new treated slope.csv' to your repo.")
+    st.error("❌ Dataset not found. Please upload 'new treated slope.slsx' to your repo.")
     st.stop()
 
 # ----------------------------
